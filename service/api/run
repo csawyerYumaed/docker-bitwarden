@@ -10,4 +10,4 @@ fi
 
 cd /bitwarden/api
 
-exec bundle exec rackup -p 4567 config.ru
+exec chpst -u bitwarden bundle exec rackup -p 4567 config.ru
