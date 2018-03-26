@@ -5,6 +5,8 @@ RUN apk add --update-cache \
     openssl \
     sqlite-dev \
     runit
+RUN adduser -s -u 500 nginx
+RUN adduser -s -u 501 bitwarden
 
 ADD vault /bitwarden/vault
 ADD bitwarden /bitwarden/api
