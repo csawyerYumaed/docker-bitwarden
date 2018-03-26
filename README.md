@@ -18,4 +18,19 @@ After you run above command, bitwarden will be available on port 8080. Note that
 
 You don't have to build your own image to use Bitwarden, you can just use `mprasil/bitwarden-ruby` for that, however if you need some extra modifications, the process is fairly simple.
 
-This configuration is written for Drone, however it shouldn't be har to write similar configuration for CI tool of your choice. Essentially Drone will run two build scripts in dedicated node/ruby docker images and will then compile the output of these into final image. The `.drone.yml` file is pretty self-explanatory. Submit an issue if you have troubles building your own image.
+This configuration is written for Drone, however it shouldn't be har to write similar configuration for CI tool of your choice. Essentially Drone will run two build scripts in dedicated node/ruby docker images and will then compile the output of these into final image. The `.drone.yml` file is pretty self-explanatory. Building by hand:
+
+Build web vault:
+```
+docker run -it --rm --name bitwarden-vault-build -v "$PWD":/usr/src/app -w /usr/src/app node:8-alpine sh /usr/src/app/build-web.sh
+```
+
+build ruby app:
+```
+docker run -it --rm --name bitwarden-api-build -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.4-alpine3.7 sh build-api.sh
+```
+
+build image:
+```
+docker build -t bitwarden-ruby .
+```
